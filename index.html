@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f8fb">
+    <meta name="description" content="A local-first security workbench for AI models, datasets, notebooks, and RAG documents.">
+    <title>Verifii — AI Supply Chain Security</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="Verifii home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M16 3.5 27 8v7.1c0 7-4.7 11.8-11 14.1C9.7 26.9 5 22.1 5 15.1V8l11-4.5Z" stroke="currentColor" stroke-width="2"/><path d="m11.2 16.2 3.2 3.2 6.8-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="brand-name">verifii<span class="brand-period">.</span><small>AI SECURITY</small></span>
+        </a>
+
+        <div class="workspace-switcher">
+          <span class="workspace-avatar">A</span>
+          <span class="workspace-copy"><strong>Acme AI</strong><small>Personal workspace</small></span>
+          <span class="chevron" aria-hidden="true">⌄</span>
+        </div>
+
+        <p class="nav-label">WORKSPACE</p>
+        <nav class="nav-list">
+          <a class="nav-item active" href="#overview"><span class="nav-icon">◫</span>Overview</a>
+          <a class="nav-item" href="#artifacts"><span class="nav-icon">▤</span>Artifacts<span class="nav-count" id="nav-artifact-count">0</span></a>
+          <a class="nav-item" href="#findings"><span class="nav-icon">◉</span>Findings<span class="nav-dot"></span></a>
+          <a class="nav-item" href="#policies"><span class="nav-icon">☷</span>Policies</a>
+        </nav>
+
+        <p class="nav-label nav-label-spaced">TOOLS</p>
+        <nav class="nav-list">
+          <a class="nav-item" href="#rag-firewall"><span class="nav-icon">⌁</span>RAG firewall<span class="nav-tag">BETA</span></a>
+          <a class="nav-item" href="#supply-chain"><span class="nav-icon">⌘</span>Supply chain</a>
+          <a class="nav-item" href="#settings"><span class="nav-icon">⚙</span>Settings</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="privacy-card">
+            <span class="privacy-icon">✳</span>
+            <strong>Your files stay yours.</strong>
+            <p>Scans run locally in your browser. Nothing is uploaded.</p>
+            <span class="privacy-status"><i></i> LOCAL SCANNING ON</span>
+          </div>
+          <button class="profile-button" type="button">
+            <span class="profile-avatar">M</span>
+            <span class="profile-copy"><strong>My workspace</strong><small>Free plan</small></span>
+            <span class="profile-menu">···</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong>Overview</strong></div>
+          <div class="topbar-actions">
+            <span class="system-status"><i></i> All systems operational</span>
+            <button class="icon-button" type="button" aria-label="Notifications">♧<span class="notification-dot"></span></button>
+            <span class="topbar-avatar">M</span>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <section class="welcome-row">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-mark">✳</span> THURSDAY, SEPTEMBER 29</p>
+              <h1>Your AI supply chain,<br class="mobile-break"> <span>in the clear.</span></h1>
+              <p class="welcome-subtitle">A little visibility goes a long way. Here’s your security snapshot.</p>
+            </div>
+            <button class="primary-button" id="add-artifacts-button" type="button"><span>＋</span> Scan artifacts</button>
+          </section>
+
+          <section class="stats-grid" aria-label="Security summary">
+            <article class="stat-card">
+              <div class="stat-top"><span>ARTIFACTS SCANNED</span><span class="stat-icon teal-icon">▤</span></div>
+              <div class="stat-value" id="stat-scanned">0</div>
+              <div class="stat-foot"><span class="stat-neutral">Across your workspace</span></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span>NEEDS ATTENTION</span><span class="stat-icon coral-icon">⚑</span></div>
+              <div class="stat-value" id="stat-attention">0</div>
+              <div class="stat-foot"><span class="stat-neutral">High-risk artifacts</span></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span>OPEN FINDINGS</span><span class="stat-icon amber-icon">⌁</span></div>
+              <div class="stat-value" id="stat-findings">0</div>
+              <div class="stat-foot"><span class="stat-neutral">Across all severities</span></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span>LAST SCAN</span><span class="stat-icon violet-icon">◷</span></div>
+              <div class="stat-value stat-time" id="stat-last-scan">—</div>
+              <div class="stat-foot"><span class="status-pulse"></span><span class="stat-neutral">Local scan engine ready</span></div>
+            </article>
+          </section>
+
+          <section class="insight-grid">
+            <article class="panel scan-panel">
+              <div class="panel-heading">
+                <div><p class="section-kicker">GET STARTED</p><h2>Bring your artifacts into the light.</h2></div>
+                <span class="step-label">01 <span>—</span> 02</span>
+              </div>
+              <p class="panel-description">Choose files to run a local heuristic scan. Your data never leaves this browser.</p>
+              <label class="dropzone" id="dropzone" for="file-input">
+                <input id="file-input" type="file" multiple hidden accept=".ipynb,.py,.pyc,.pkl,.pickle,.joblib,.pt,.pth,.bin,.safetensors,.h5,.hdf5,.keras,.onnx,.csv,.tsv,.json,.jsonl,.ndjson,.txt,.md,.html,.htm,.xml,.yaml,.yml,.toml,.log,.pdf">
+                <span class="upload-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14.5v3A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <strong>Drop files to scan <span>or <u>browse</u></span></strong>
+                <small>Notebooks, models, datasets &amp; RAG documents</small>
+                <span class="format-list">.ipynb <i>·</i> .pkl <i>·</i> .pt <i>·</i> .csv <i>·</i> .jsonl <i>·</i> .md</span>
+              </label>
+              <div class="privacy-note"><span>♧</span> Processed locally in your browser <span class="privacy-divider">·</span> No file uploads</div>
+            </article>
+
+            <article class="panel exposure-panel">
+              <div class="panel-heading">
+                <div><p class="section-kicker">SECURITY POSTURE</p><h2>Threat exposure</h2></div>
+                <button class="more-button" type="button" aria-label="More options">···</button>
+              </div>
+              <div class="exposure-body">
+                <div class="donut" id="exposure-chart" role="img" aria-label="No findings yet">
+                  <div class="donut-center"><strong id="exposure-total">0</strong><span>FINDINGS</span></div>
+                </div>
+                <div class="legend">
+                  <div><i class="legend-dot critical-dot"></i><span>Critical</span><strong id="count-critical">0</strong></div>
+                  <div><i class="legend-dot high-dot"></i><span>High</span><strong id="count-high">0</strong></div>
+                  <div><i class="legend-dot medium-dot"></i><span>Medium</span><strong id="count-medium">0</strong></div>
+                  <div><i class="legend-dot low-dot"></i><span>Low</span><strong id="count-low">0</strong></div>
+                </div>
+              </div>
+              <div class="exposure-footer"><span class="shield-mini">✓</span> <span id="exposure-message">Your supply chain is looking good.</span></div>
+            </article>
+          </section>
+
+          <section class="panel artifacts-panel" id="artifacts">
+            <div class="artifacts-header">
+              <div class="panel-heading">
+                <div><p class="section-kicker">YOUR WORKSPACE</p><h2>Recent artifacts <span class="header-count" id="artifact-header-count">0</span></h2></div>
+              </div>
+              <div class="table-actions">
+                <label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search artifacts..." aria-label="Search artifacts"></label>
+                <button class="filter-button" id="filter-button" type="button"><span>☷</span> Filter <span class="filter-caret">⌄</span></button>
+                <button class="export-button" id="export-button" type="button">Export report <span>↗</span></button>
+              </div>
+            </div>
+            <div class="filter-row" id="filter-row" hidden>
+              <span>Show:</span>
+              <button class="filter-chip selected" data-filter="all" type="button">All</button>
+              <button class="filter-chip" data-filter="critical" type="button">Critical</button>
+              <button class="filter-chip" data-filter="high" type="button">High risk</button>
+              <button class="filter-chip" data-filter="medium" type="button">Medium</button>
+              <button class="filter-chip" data-filter="clean" type="button">No findings</button>
+              <button class="filter-chip" data-filter="unsupported" type="button">Needs review</button>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ARTIFACT</th><th>TYPE</th><th>SCAN STATUS</th><th>FINDINGS</th><th>LAST SCANNED</th><th></th></tr></thead>
+                <tbody id="artifact-rows"></tbody>
+              </table>
+              <div class="empty-state" id="empty-state" hidden>
+                <span>⌕</span><strong>No artifacts found</strong><p>Try another search or add files to start a scan.</p>
+                <button class="text-button" id="empty-add-button" type="button">Scan your first artifact →</button>
+              </div>
+            </div>
+            <div class="table-footer"><span id="table-summary">Showing 0 artifacts</span><span class="local-badge"><i></i> PRIVATE BY DESIGN</span></div>
+          </section>
+
+          <footer class="page-footer"><span>Made for the builders building what’s next.</span><span><span class="footer-status"><i></i> Scanner operational</span><span class="footer-divider">·</span> v0.1.0</span></footer>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
